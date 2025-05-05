@@ -1,0 +1,438 @@
+
+/* Booking Slot Component - Inspired by Holi festival colors */
+.bookslot-container {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    position: relative;
+    /* Removing overflow: hidden to allow scrolling */
+  }
+  
+  .bookslot-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #FF4081, #FF9800, #FFEB3B, #4CAF50, #2196F3);
+    z-index: 1;
+  }
+  
+  /* Header */
+  .bookslot-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(33, 150, 243, 0.1);
+  }
+  
+  .bookslot-header h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    background: linear-gradient(90deg, #FF9800, #4CAF50);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .bookslot-header svg {
+    color: #FF9800;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.1));
+  }
+  
+  /* Date Cards */
+  .dates-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: #FF4081 rgba(255, 235, 59, 0.1);
+  }
+  
+  .dates-wrapper::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .dates-wrapper::-webkit-scrollbar-track {
+    background: rgba(255, 235, 59, 0.1);
+    border-radius: 10px;
+  }
+  
+  .dates-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(#FF4081, #FF9800);
+    border-radius: 10px;
+  }
+  
+  .date-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 235, 59, 0.2);
+  }
+  
+  .date-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  }
+  
+  .date-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    background: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    transition: all 0.2s ease;
+  }
+  
+  .date-toggle:hover {
+    background: rgba(255, 235, 59, 0.05);
+  }
+  
+  .date-toggle.date-expanded {
+    background: linear-gradient(to right, rgba(255, 64, 129, 0.05), rgba(255, 152, 0, 0.05));
+    border-bottom: 1px solid rgba(255, 235, 59, 0.2);
+  }
+  
+  .date-toggle svg {
+    color: #FF9800;
+  }
+  
+  .toggle-indicator {
+    background: rgba(255, 64, 129, 0.1);
+    color: #FF4081;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .toggle-indicator.expanded {
+    background: rgba(33, 150, 243, 0.1);
+    color: #2196F3;
+    transform: rotate(180deg);
+  }
+  
+  /* Slots Panel */
+  .slots-panel {
+    padding: 1.25rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
+    animation: fadeInDown 0.3s ease-out forwards;
+  }
+  
+  .time-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  
+  .time-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 0.5rem;
+    background: white;
+    border: 1px solid rgba(255, 152, 0, 0.2);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    height: 70px;
+    color : black
+  }
+  
+  .time-slot svg {
+    color: #4CAF50;
+    margin-bottom: 0.3rem;
+  }
+  
+  .time-slot:hover:not(.booked) {
+    background: rgba(76, 175, 80, 0.05);
+    border-color: rgba(76, 175, 80, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .time-slot.selected {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(33, 150, 243, 0.1));
+    border: 2px solid #4CAF50;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+  }
+  
+  .time-slot.booked {
+    background: rgba(158, 158, 158, 0.1);
+    border-color: rgba(158, 158, 158, 0.2);
+    color: #9E9E9E;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  
+  .time-slot.booked svg {
+    color: #9E9E9E;
+  }
+  
+  .booked-tag {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(244, 67, 54, 0.1);
+    color: #F44336;
+    font-size: 0.65rem;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0 0 0 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Booking Action */
+  .booking-action {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  
+  .book-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: linear-gradient(45deg, #FF4081, #FF9800);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 64, 129, 0.2);
+    min-width: 200px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .book-button:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+    z-index: 1;
+  }
+  
+  .book-button:hover:before {
+    left: 100%;
+  }
+  
+  .book-button:hover {
+    background: linear-gradient(45deg, #FF9800, #FF4081);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 64, 129, 0.3);
+  }
+  
+  .book-button:disabled {
+    background: #BDBDBD;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .book-button.processing {
+    background: linear-gradient(45deg, #FFEB3B, #FF9800);
+  }
+  
+  .dots span {
+    animation: dots 1.5s infinite;
+    opacity: 0;
+    display: inline-block;
+    margin-left: 2px;
+  }
+  
+  .dots span:nth-child(1) {
+    animation-delay: 0s;
+  }
+  
+  .dots span:nth-child(2) {
+    animation-delay: 0.5s;
+  }
+  
+  .dots span:nth-child(3) {
+    animation-delay: 1s;
+  }
+  
+  /* No Slots Message */
+  .no-slots-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9));
+    border-radius: 12px;
+    border: 1px dashed rgba(33, 150, 243, 0.3);
+  }
+  
+  .no-slots-message svg {
+    color: #BDBDBD;
+    margin-bottom: 1rem;
+  }
+  
+  .no-slots-message p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 0.5rem;
+  }
+  
+  .no-slots-message span {
+    color: #757575;
+    font-size: 0.95rem;
+  }
+  
+  /* Loading State */
+  .bookslot-loading {
+    padding: 3rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .bookslot-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 152, 0, 0.1);
+    border-top-color: #FF9800;
+    border-left-color: #FF4081;
+    border-radius: 50%;
+    animation: spinner-rotation 1.5s infinite linear;
+  }
+  
+  .bookslot-loading p {
+    color: #666;
+    font-weight: 500;
+  }
+  
+  /* Holi-inspired confetti dots */
+  .bookslot-container::after {
+    content: '';
+    position: relative;
+    top: 10px;
+    right: 10px;
+    width: 60px;
+    height: 60px;
+    background-image: radial-gradient(circle, #FF4081 15%, transparent 15%),
+                      radial-gradient(circle, #FFEB3B 15%, transparent 15%),
+                      radial-gradient(circle, #4CAF50 15%, transparent 15%),
+                      radial-gradient(circle, #2196F3 15%, transparent 15%);
+    background-size: 15px 15px;
+    background-position: 0 0, 10px 10px, 20px 20px, 30px 30px;
+    opacity: 0.3;
+    z-index: 0;
+    animation: confetti-float 10s linear infinite;
+  }
+  
+  /* Animations */
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes dots {
+    0%, 20% {
+      opacity: 0;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(-5px);
+    }
+    80%, 100% {
+      opacity: 0;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes confetti-float {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes spinner-rotation {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .bookslot-header h3 {
+      font-size: 1.2rem;
+    }
+    
+    .time-slots-grid {
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .bookslot-container {
+      padding: 1rem;
+    }
+    
+    .time-slots-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .time-slot {
+      height: 60px;
+      padding: 0.5rem;
+    }
+    
+    .book-button {
+      width: 100%;
+      padding: 0.75rem 1rem;
+    }
+    .dates-wrapper {
+        max-height: 300px; /* Smaller max-height for mobile */
+      }
+  }
+  

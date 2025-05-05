@@ -1,0 +1,124 @@
+/* Container for the entire booking details section */
+.booking-details-container {
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 1200px; /* Limit the width for better layout */
+    margin: 0 auto; /* Center align the container */
+}
+
+h3, h4 {
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center; /* Center align the headings */
+}
+
+/* Booking list to display tickets in rows */
+.booking-list {
+    display: grid; /* Use grid layout for better row alignment */
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); /* Responsive columns */
+    gap: 20px; /* Adds space between tickets */
+}
+
+/* Individual ticket container */
+.ticket-container {
+    position: relative;
+    margin: 20px 0;
+}
+
+/* Ticket styling */
+.ticket {
+    position: relative;
+    background: linear-gradient(135deg, #d2b48c, #b39268); /* Ticket color */
+    padding: 20px;
+    width: 400px;
+    color: #2e2e2e;
+    text-align: left;
+    border: 2px dashed #8b4513;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.ticket::before {
+    content: attr(data-id); /* Dynamically insert the ID */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg); /* Center and rotate */
+    font-size: 5em; /* Adjust size */
+    color: rgba(0, 0, 0, 0.05); /* Subtle, blurred black text */
+    z-index: 0; /* Place it in the background */
+    white-space: nowrap; /* Prevent text wrapping */
+    pointer-events: none; /* Ensure it's non-interactive */
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+
+/* Ticket heading styling */
+.ticket h4 {
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+    z-index: 1;
+    position: relative; /* To keep above the pseudo-element */
+}
+
+/* Ticket paragraph styling */
+.ticket p {
+    margin: 5px 0;
+    font-size: 0.9em;
+    z-index: 1;
+    position: relative; /* To keep above the pseudo-element */
+}
+
+/* Download button styling */
+.download-button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #8b4513; /* Brown button color */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background 0.3s ease;
+    z-index: 1;
+    position: relative; /* To keep above the pseudo-element */
+}
+
+.download-button:hover {
+    background: #5a3310; /* Darker brown on hover */
+}
+
+/* Diagonal ID styling */
+.ticket::before {
+    content: attr(data-id); /* Dynamically insert the booking ID */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg); /* Center and rotate */
+    font-size: 5em; /* Large font size for background effect */
+    color: rgba(0, 0, 0, 0.1); /* Subtle, blurred black text */
+    z-index: 0; /* Place it in the background */
+    white-space: nowrap;
+    pointer-events: none; /* Ensure it's non-interactive */
+}
+
+/* Make the layout mobile-friendly */
+@media (max-width: 768px) {
+    .booking-details-container {
+        padding: 15px;
+    }
+
+    .booking-list {
+        grid-template-columns: 1fr; /* Single column on smaller screens */
+    }
+
+    .ticket {
+        width: 100%; /* Adjust width for smaller screens */
+    }
+}

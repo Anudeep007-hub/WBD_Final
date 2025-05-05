@@ -1,0 +1,326 @@
+/* Create Sport - Holi Festival Theme */
+.create-sport-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    font-family: 'SF Pro Display', sans-serif;
+  }
+  
+  .back-button {
+    margin-bottom: 1.5rem;
+  }
+  
+  .back-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #FF4081;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    background: rgba(255, 64, 129, 0.1);
+    width: fit-content;
+    transition: all 0.3s ease;
+  }
+  
+  .back-link:hover {
+    transform: translateX(-4px);
+    background: rgba(255, 64, 129, 0.15);
+  }
+  
+  .create-sport-form-wrapper {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    position: relative;
+  }
+  
+  /* Rainbow border around the form */
+  .create-sport-form-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: linear-gradient(90deg, #FF4081, #FF9800, #FFEB3B, #4CAF50, #2196F3);
+    z-index: 1;
+  }
+  
+  /* Holi-inspired decorative elements */
+  .create-sport-form-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background-image: 
+      radial-gradient(circle, #FF4081 20%, transparent 20%),
+      radial-gradient(circle, #FFEB3B 20%, transparent 20%),
+      radial-gradient(circle, #4CAF50 20%, transparent 20%),
+      radial-gradient(circle, #2196F3 20%, transparent 20%);
+    background-size: 10px 10px;
+    background-position: 0 0, 5px 5px, 10px 10px, 15px 15px;
+    opacity: 0.7;
+    animation: confetti-rotate 5s linear infinite;
+  }
+  
+  .create-sport-header {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: rgba(255, 255, 255, 0.6);
+    border-bottom: 1px solid rgba(76, 175, 80, 0.1);
+  }
+  
+  .create-sport-header h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    background: linear-gradient(90deg, #FF4081, #FF9800, #FFEB3B, #4CAF50, #2196F3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0px 2px 5px rgba(0,0,0,0.05);
+  }
+  
+  .create-sport-header p {
+    color: #555;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .create-sport-form {
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  /* Make description and slots full width */
+  .form-group:nth-child(2),
+  .form-group:nth-child(7) {
+    grid-column: 1 / -1;
+  }
+  
+  .form-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #333;
+    font-size: 1rem;
+  }
+  
+  .form-group label svg {
+    color: #FF9800;
+  }
+  
+  .form-input,
+  .form-textarea {
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.8);
+  }
+  
+  .form-textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  
+  .form-input:focus,
+  .form-textarea:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+  }
+  
+  /* Color-themed focus states for different inputs */
+  .form-group:nth-child(1) .form-input:focus {
+    border-color: #FF4081;
+    box-shadow: 0 0 0 3px rgba(255, 64, 129, 0.2);
+  }
+  
+  .form-group:nth-child(2) .form-textarea:focus {
+    border-color: #FF9800;
+    box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.2);
+  }
+  
+  .form-group:nth-child(3) .form-input:focus {
+    border-color: #FFEB3B;
+    box-shadow: 0 0 0 3px rgba(255, 235, 59, 0.2);
+  }
+  
+  .form-group:nth-child(4) .form-input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+  }
+  
+  .form-group:nth-child(5) .form-input:focus {
+    border-color: #2196F3;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
+  }
+  
+  .form-group:nth-child(6) .form-input:focus {
+    border-color: #9C27B0;
+    box-shadow: 0 0 0 3px rgba(156, 39, 176, 0.2);
+  }
+  
+  .slot-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .slot-input-group {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  .slot-input {
+    flex: 1;
+  }
+  
+  .slot-button {
+    background: rgba(255, 64, 129, 0.1);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #FF4081;
+  }
+  
+  .slot-button:hover {
+    background: rgba(255, 64, 129, 0.2);
+    transform: scale(1.05);
+  }
+  
+  .slot-button:active {
+    transform: scale(0.95);
+  }
+  
+  .slot-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .add-slot-button {
+    background: none;
+    border: 2px dashed rgba(76, 175, 80, 0.3);
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: #4CAF50;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .add-slot-button:hover {
+    background: rgba(76, 175, 80, 0.05);
+    border-color: #4CAF50;
+  }
+  
+  .submit-button {
+    grid-column: 1 / -1;
+    background: linear-gradient(45deg, #FF4081, #FF9800);
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    box-shadow: 0 4px 15px rgba(255, 64, 129, 0.2);
+  }
+  
+  .submit-button:hover {
+    background: linear-gradient(45deg, #FF9800, #FF4081);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 64, 129, 0.3);
+  }
+  
+  .submit-button:active {
+    transform: translateY(1px);
+  }
+  
+  .error-message {
+    grid-column: 1 / -1;
+    color: #f44336;
+    text-align: center;
+    font-weight: 500;
+    margin-top: 1rem;
+    padding: 0.8rem;
+    background: rgba(244, 67, 54, 0.1);
+    border-radius: 8px;
+  }
+  
+  .success-message {
+    text-align: center;
+    color: #4CAF50;
+    font-weight: 600;
+    margin: 0 2rem;
+    padding: 0.8rem;
+    background: rgba(76, 175, 80, 0.1);
+    border-radius: 8px;
+    animation: pulse 2s infinite;
+  }
+  
+  /* Holi-inspired animations */
+  @keyframes confetti-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  @keyframes pulse {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .create-sport-form {
+      grid-template-columns: 1fr;
+    }
+    
+    .create-sport-header h1 {
+      font-size: 1.8rem;
+    }
+  }
+  
+  /* Colorful form elements based on Holi colors */
+  .form-group:nth-child(odd) .form-input::placeholder,
+  .form-group:nth-child(odd) .form-textarea::placeholder {
+    color: rgba(255, 64, 129, 0.5);
+  }
+  
+  .form-group:nth-child(even) .form-input::placeholder,
+  .form-group:nth-child(even) .form-textarea::placeholder {
+    color: rgba(76, 175, 80, 0.5);
+  }
+  

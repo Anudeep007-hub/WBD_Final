@@ -1,0 +1,86 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    min-height: 100vh;
+}
+
+.RS-booking-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-bottom: 400px;
+}
+
+.RS-booking-title {
+    text-align: center;
+    font-size: 1.8rem;
+    /* margin-bottom: 1rem; */
+}
+
+.RS-booking-form p {
+    font-size: 1rem;
+    /* margin: 0.5rem 0; */
+}
+
+.RS-form-group {
+    margin-bottom: 1rem;
+}
+
+.RS-form-label {
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.RS-form-input {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.RS-form-input:focus {
+    border-color: #007bff;
+}
+
+.RS-form-button {
+    padding: 1.2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.RS-form-button:hover {
+    background-color: #00b33c;
+    transform: scale(1.02);
+}
+
+.RS-form-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.RS-error-message,
+.RS-loading-message {
+    text-align: center;
+    font-size: 1rem;
+    color: #ff0000;
+}

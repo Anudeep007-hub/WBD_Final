@@ -1,0 +1,42 @@
+.booking-details-container {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Flexbox to align the charts horizontally */
+.charts-row {
+    display: flex;
+    flex-direction: row; /* Align charts side by side */
+    justify-content: space-between; /* Space out the charts */
+    gap: 20px;  /* Space between each chart */
+    margin-bottom: 20px;
+}
+
+/* Container for each chart */
+.chart-container {
+    width: 48%; /* Take up almost half of the space */
+    box-sizing: border-box;
+}
+
+/* Styling for the table */
+.revenue-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.revenue-table th, .revenue-table td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.revenue-table th {
+    background-color: #f4f4f4;
+}
+
+/* Title for the charts */
+h4 {
+    text-align: center;
+    margin-bottom: 15px;
+}

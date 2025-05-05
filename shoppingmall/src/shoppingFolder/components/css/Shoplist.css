@@ -1,0 +1,303 @@
+/* ShopList.css */
+.shops-list-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.shops-list-header {
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.shops-list-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: bold;
+  background: linear-gradient(90deg, #ff7eb9, #8c52ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.shops-list-header p {
+  font-size: 1.2rem;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.shops-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.shop-item {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.shop-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.bg-holi-pink {
+  background: linear-gradient(135deg, rgba(255, 126, 185, 0.1), rgba(255, 126, 185, 0.2));
+  border: 1px solid rgba(255, 126, 185, 0.3);
+}
+
+.bg-holi-yellow {
+  background: linear-gradient(135deg, rgba(255, 194, 102, 0.1), rgba(255, 194, 102, 0.2));
+  border: 1px solid rgba(255, 194, 102, 0.3);
+}
+
+.bg-holi-purple {
+  background: linear-gradient(135deg, rgba(140, 82, 255, 0.1), rgba(140, 82, 255, 0.2));
+  border: 1px solid rgba(140, 82, 255, 0.3);
+}
+
+.bg-holi-blue {
+  background: linear-gradient(135deg, rgba(102, 178, 255, 0.1), rgba(102, 178, 255, 0.2));
+  border: 1px solid rgba(102, 178, 255, 0.3);
+}
+
+.bg-holi-green {
+  background: linear-gradient(135deg, rgba(102, 255, 178, 0.1), rgba(102, 255, 178, 0.2));
+  border: 1px solid rgba(102, 255, 178, 0.3);
+}
+
+.bg-holi-orange {
+  background: linear-gradient(135deg, rgba(255, 153, 102, 0.1), rgba(255, 153, 102, 0.2));
+  border: 1px solid rgba(255, 153, 102, 0.3);
+}
+
+.shop-item-content {
+  padding: 25px;
+  backdrop-filter: blur(10px);
+}
+
+.shop-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.shop-info h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.shop-location, .shop-contact, .shop-owner {
+  font-size: 1.1rem;
+  color: #555;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.details-button {
+  align-self: flex-start;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #ff7eb9, #8c52ff);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(140, 82, 255, 0.3);
+}
+
+.details-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(140, 82, 255, 0.4);
+  background: linear-gradient(90deg, #8c52ff, #ff7eb9);
+}
+
+.details-button.active {
+  background: linear-gradient(90deg, #8c52ff, #ff7eb9);
+}
+
+.shop-details {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  color: #444;
+  line-height: 1.6;
+  overflow: hidden;
+}
+
+.working-hours, .owner-details {
+  margin-top: 15px;
+}
+
+.working-hours h3, .owner-details h3 {
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.working-hours ul {
+  list-style: none;
+  padding: 0;
+}
+
+.working-hours li {
+  margin-bottom: 5px;
+  display: flex;
+}
+
+.working-hours span, .owner-details span {
+  font-weight: 600;
+  min-width: 100px;
+  display: inline-block;
+}
+
+.owner-details p {
+  margin: 5px 0;
+}
+
+.loading-container {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(140, 82, 255, 0.2);
+  border-radius: 50%;
+  border-top-color: #8c52ff;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-container p {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.error-container {
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-message {
+  background: linear-gradient(135deg, rgba(255, 102, 102, 0.1), rgba(255, 102, 102, 0.2));
+  border: 1px solid rgba(255, 102, 102, 0.3);
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+  max-width: 500px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.error-message h3 {
+  color: #e74c3c;
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.error-message p {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.error-message button {
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #ff7eb9, #8c52ff);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.no-shops {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 1.2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .shops-list-container {
+    padding: 40px 15px;
+  }
+  
+  .shops-list-header h1 {
+    font-size: 2rem;
+  }
+  
+  .shops-list-header p {
+    font-size: 1rem;
+  }
+  
+  .shop-info h2 {
+    font-size: 1.5rem;
+  }
+  
+  .shop-location, .shop-contact, .shop-owner {
+    font-size: 1rem;
+  }
+  
+  .working-hours h3, .owner-details h3 {
+    font-size: 1.2rem;
+  }
+  
+  .working-hours span, .owner-details span {
+    min-width: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .shops-list-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .shop-item-content {
+    padding: 20px;
+  }
+  
+  .shop-info h2 {
+    font-size: 1.3rem;
+  }
+  
+  .working-hours span, .owner-details span {
+    min-width: 70px;
+  }
+}

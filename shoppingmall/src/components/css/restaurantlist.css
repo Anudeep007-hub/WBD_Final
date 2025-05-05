@@ -1,0 +1,494 @@
+/* Base Styles */
+:root {
+    --holi-pink: #FF5E7D;
+    --holi-orange: #FFD166;
+    --holi-purple: #D4A5FF;
+    --holi-yellow: #FECDA6;
+    --holi-green: #A0FFA3;
+    --holi-blue: #9BE8D8;
+    --holi-magenta: #EF476F;
+    --holi-teal: #06D6A0;
+    --holi-light-blue: #0EA5E9;
+  }
+  
+  .RS-container {
+    position: relative;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4));
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+  
+  .holi-festival-container {
+    position: relative;
+    animation: fadeIn 0.8s ease-in-out;
+  }
+  
+  /* Animated Color Powder */
+  .holi-powder {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    top: -50px;
+    opacity: 0.8;
+    filter: blur(3px);
+    animation: fallDown 5s linear forwards;
+    z-index: 1;
+  }
+  
+  @keyframes fallDown {
+    0% {
+      top: -50px;
+      transform: scale(0.8) rotate(0deg);
+    }
+    50% {
+      transform: scale(1.2) rotate(180deg);
+      opacity: 0.8;
+    }
+    100% {
+      top: 120%;
+      transform: scale(0.5) rotate(360deg);
+      opacity: 0;
+    }
+  }
+  
+  /* Holi Decorations */
+  .holi-decoration {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    z-index: -1;
+    filter: blur(20px);
+    opacity: 0.5;
+    animation: pulse 4s infinite alternate;
+  }
+  
+  .top-left {
+    top: -30px;
+    left: -30px;
+    background: var(--holi-pink);
+  }
+  
+  .top-right {
+    top: -30px;
+    right: -30px;
+    background: var(--holi-yellow);
+  }
+  
+  .bottom-left {
+    bottom: -30px;
+    left: -30px;
+    background: var(--holi-green);
+  }
+  
+  .bottom-right {
+    bottom: -30px;
+    right: -30px;
+    background: var(--holi-purple);
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(1.2);
+      opacity: 0.7;
+    }
+  }
+  
+  /* Headers and Titles */
+  .holi-header {
+    font-size: 2.5rem;
+    text-align: center;
+    margin: 1.5rem 0;
+    background: linear-gradient(90deg, var(--holi-pink), var(--holi-orange), var(--holi-purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    animation: shimmer 3s infinite linear;
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+  
+  .RS-section-title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--holi-magenta);
+    font-weight: bold;
+  }
+  
+  /* Offers Section */
+  .holi-offers {
+    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
+                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23FF9A9E' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.8s ease-in;
+  }
+  
+  /* Filters */
+  .holi-filters {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    position: relative;
+    z-index: 2;
+    animation: fadeInUp 0.6s ease-out;
+  }
+  
+  .holi-select {
+    background-color: white;
+    border: 2px solid rgba(255, 158, 171, 0.5);
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    color: #444;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+  }
+  
+  .holi-select:focus {
+    border-color: var(--holi-pink);
+    box-shadow: 0 0 0 3px rgba(255, 94, 125, 0.3);
+    outline: none;
+  }
+  
+  .holi-button {
+    background: linear-gradient(45deg, var(--holi-orange), var(--holi-pink));
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .holi-button:hover {
+    background: linear-gradient(45deg, var(--holi-pink), var(--holi-orange));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .holi-clear-button {
+    background: linear-gradient(45deg, var(--holi-purple), var(--holi-blue));
+    color: white;
+    transition: all 0.3s ease;
+  }
+  
+  .holi-clear-button:hover {
+    background: linear-gradient(45deg, var(--holi-blue), var(--holi-purple));
+  }
+  
+  .holi-advanced-filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  /* Restaurant Cards */
+  .holi-card {
+    position: relative;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    animation: scaleIn 0.5s ease-out;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  
+  .holi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--holi-pink), var(--holi-purple), var(--holi-blue), var(--holi-green), var(--holi-yellow));
+    z-index: 1;
+  }
+  
+  .holi-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    border-color: rgba(255, 94, 125, 0.3);
+  }
+  
+  .holi-card-decoration {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, var(--holi-yellow) 0%, transparent 70%);
+    opacity: 0.2;
+    top: -30px;
+    right: -30px;
+    border-radius: 50%;
+    z-index: 0;
+  }
+  
+  .RS-card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .holi-card:hover .RS-card-image {
+    transform: scale(1.1);
+  }
+  
+  .RS-restaurant-name {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  
+  .holi-tag {
+    background: linear-gradient(45deg, rgba(255, 158, 171, 0.15), rgba(255, 209, 166, 0.15));
+    color: var(--holi-magenta);
+    font-weight: 500;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid rgba(255, 158, 171, 0.3);
+    transition: all 0.3s ease;
+  }
+  
+  .holi-tag:hover {
+    background: linear-gradient(45deg, rgba(255, 158, 171, 0.3), rgba(255, 209, 166, 0.3));
+    transform: translateY(-2px);
+  }
+  
+  .holi-book-button {
+    display: inline-block;
+    background: linear-gradient(45deg, var(--holi-blue), var(--holi-green));
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 30px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .holi-book-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--holi-green), var(--holi-blue));
+    transition: all 0.4s ease;
+    z-index: -1;
+  }
+  
+  .holi-book-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .holi-book-button:hover::before {
+    left: 0;
+  }
+  
+  /* Loading and Error States */
+  .holi-loading {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .RS-loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid rgba(255, 158, 171, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--holi-pink);
+    animation: spin 1s linear infinite;
+  }
+  
+  .holi-spinner-decoration {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(212, 165, 255, 0.2) 0%, transparent 70%);
+    animation: pulse 2s infinite alternate;
+    border-radius: 50%;
+    z-index: -1;
+  }
+  
+  .holi-error {
+    text-align: center;
+    padding: 3rem;
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .holi-retry-button {
+    background: linear-gradient(45deg, var(--holi-pink), var(--holi-purple));
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .holi-retry-button:hover {
+    background: linear-gradient(45deg, var(--holi-purple), var(--holi-pink));
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .holi-no-results {
+    text-align: center;
+    padding: 3rem;
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    grid-column: 1 / -1;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Grid Layout */
+  .RS-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .RS-grid-container {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .holi-header {
+      font-size: 2rem;
+    }
+    
+    .holi-filters {
+      padding: 1rem;
+    }
+    
+    .holi-advanced-filters {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .RS-container {
+      padding: 1rem;
+    }
+    
+    .holi-header {
+      font-size: 1.5rem;
+    }
+    
+    .RS-section-title {
+      font-size: 1.3rem;
+    }
+    
+    .RS-filter-buttons {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .holi-card {
+      margin-bottom: 1rem;
+    }
+  }
+  

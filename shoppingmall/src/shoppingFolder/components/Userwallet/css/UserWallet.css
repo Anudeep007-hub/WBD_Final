@@ -1,0 +1,360 @@
+/* UserWallet Component Styling */
+.user-wallet-page {
+    margin-top: 60px;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    background-color: #f9f8ff;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  
+  .user-wallet-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+  }
+  
+  .user-wallet-header {
+    background: linear-gradient(135deg, #9b87f5, #7E69AB);
+    color: white;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .user-wallet-header h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+  
+  /* Profile Section */
+  .user-profile-section {
+    display: flex;
+    padding: 2rem;
+    gap: 2rem;
+    border-bottom: 1px solid #f1f0fb;
+  }
+  
+  @media (max-width: 768px) {
+    .user-profile-section {
+      flex-direction: column;
+    }
+  }
+  
+  /* Profile Image */
+  .profile-image-section {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .profile-image-container {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #f1f0fb;
+    box-shadow: 0 4px 12px rgba(155, 135, 245, 0.15);
+    position: relative;
+  }
+  
+  .profile-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .profile-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9b87f5;
+    background-color: #f1f0fb;
+  }
+  
+  .image-preview {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  
+  .image-upload-container {
+    width: 100%;
+  }
+  
+  .upload-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: #f1f0fb;
+    color: #7E69AB;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .upload-button:hover {
+    background-color: #e6e3f7;
+  }
+  
+  input[type="file"] {
+    display: none;
+  }
+  
+  /* User Details */
+  .user-details-section {
+    flex: 1;
+  }
+  
+  .user-name {
+    margin-bottom: 1.5rem;
+  }
+  
+  .user-name h2 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.5rem;
+    color: #403E43;
+  }
+  
+  .member-since {
+    color: #8E9196;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  
+  .user-info-card {
+    background-color: #f9f8ff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  
+  .info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .info-item svg {
+    color: #9b87f5;
+    margin-top: 4px;
+  }
+  
+  .info-label {
+    font-size: 0.85rem;
+    color: #8E9196;
+    margin: 0 0 0.25rem 0;
+  }
+  
+  .info-value {
+    font-size: 1rem;
+    color: #403E43;
+    margin: 0;
+    font-weight: 500;
+  }
+  
+  .points {
+    color: #7E69AB;
+    font-weight: 600;
+  }
+  
+  /* Bookings Section */
+  .user-bookings-section {
+    padding: 2rem;
+  }
+  
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .section-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #403E43;
+  }
+  
+  .section-header svg {
+    color: #9b87f5;
+  }
+  
+  /* Bookings List */
+  .bookings-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+  
+  .booking-item {
+    background-color: #f9f8ff;
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .booking-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  .booking-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .booking-header svg {
+    color: #9b87f5;
+  }
+  
+  .booking-header h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #403E43;
+  }
+  
+  .booking-details p {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    color: #8E9196;
+  }
+  
+  .booking-details strong {
+    color: #403E43;
+  }
+  
+  .booking-status {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-top: 0.75rem;
+  }
+  
+  .booking-status.confirmed {
+    background-color: #e7f8ef;
+    color: #0d9f6e;
+  }
+  
+  .booking-status.pending {
+    background-color: #fff8e6;
+    color: #d97706;
+  }
+  
+  .booking-status.cancelled {
+    background-color: #fee7e7;
+    color: #e53e3e;
+  }
+  
+  .no-bookings {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #8E9196;
+    padding: 2rem;
+    background-color: #f1f0fb;
+    border-radius: 12px;
+  }
+  
+  /* Loading and Error States */
+  .user-wallet-loading,
+  .user-wallet-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    text-align: center;
+  }
+  
+  .loading-animation {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(155, 135, 245, 0.2);
+    border-radius: 50%;
+    border-top-color: #9b87f5;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  .user-wallet-error p {
+    color: #e53e3e;
+    margin-bottom: 1rem;
+  }
+  
+  .user-wallet-error button {
+    background-color: #9b87f5;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .user-wallet-container {
+      border-radius: 12px;
+    }
+    
+    .user-profile-section {
+      padding: 1.5rem;
+    }
+    
+    .bookings-list {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .user-wallet-header {
+      padding: 1.25rem;
+    }
+    
+    .user-wallet-header h1 {
+      font-size: 1.5rem;
+    }
+    
+    .user-profile-section,
+    .user-bookings-section {
+      padding: 1.25rem;
+    }
+    
+    .profile-image-container {
+      width: 120px;
+      height: 120px;
+    }
+  }
+  

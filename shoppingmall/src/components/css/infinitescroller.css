@@ -1,0 +1,44 @@
+:root {
+    --bg-color: #ffefbc;
+    --text-color: #000000;
+    --scroll-bg-color: #942121;
+    --scroll-border-color: #ddd;
+    --scroll-text-color: #ffffff;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.RS-scroll-container {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    position: relative;
+    background-color: var(--scroll-bg-color);
+    border: 1px solid var(--scroll-border-color);
+    padding: 10px 0;
+}
+
+.RS-scroll-content {
+    display: inline-flex;
+    animation: scroll-left 20s linear infinite;
+}
+
+.RS-offer-item {
+    margin: 0 20px;
+    font-size: 1.2em;
+    color: var(--scroll-text-color);
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}

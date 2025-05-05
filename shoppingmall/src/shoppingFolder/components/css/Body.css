@@ -1,0 +1,391 @@
+/* Body.css - Colorful Shopping Mall Styling */
+
+.mall-body {
+  width: 100%;
+  background-color: #fff;
+  position: relative;
+  padding-top: 64px; /* For the fixed header */
+  font-family: 'SF Pro Display', system-ui, sans-serif;
+}
+
+/* Hero Banner */
+.hero-banner {
+  position: relative;
+  height: 500px;
+  width: 100%;
+  background: linear-gradient(90deg, hsla(24, 100%, 83%, 1) 0%, hsla(341, 91%, 68%, 1) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://images.unsplash.com/photo-1581417478175-a9ef18f210c2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.15;
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 1s ease-out;
+}
+
+.hero-content p {
+  font-size: 1.5rem;
+  color: white;
+  margin-bottom: 30px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 1.2s ease-out;
+}
+
+.explore-btn {
+  background-color: white;
+  color: #ff5e85;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 50px;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  animation: fadeInUp 1.4s ease-out;
+}
+
+.explore-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  background-color: #fff8f9;
+}
+
+/* Navigation Links */
+.navigation-row {
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(90deg, #fff8f9, #fffcf9);
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.section-link {
+  margin: 0 20px;
+  position: relative;
+}
+
+.section-link a {
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  transition: color 0.3s;
+  padding: 10px 20px;
+  border-radius: 50px;
+  position: relative;
+  z-index: 1;
+}
+
+.section-link.home a { color: #ff5e85; }
+.section-link.shops a { color: #ff8a5c; }
+.section-link.deals a { color: #4ea5d9; }
+.section-link.events a { color: #44cfcb; }
+
+.section-link a::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(0.8);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.section-link.home a::before { background: rgba(255, 94, 133, 0.1); }
+.section-link.shops a::before { background: rgba(255, 138, 92, 0.1); }
+.section-link.deals a::before { background: rgba(78, 165, 217, 0.1); }
+.section-link.events a::before { background: rgba(68, 207, 203, 0.1); }
+
+.section-link a:hover {
+  transform: translateY(-2px);
+}
+
+.section-link a:hover::before {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Feature Section */
+.feature-section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 60px 20px;
+  background: linear-gradient(90deg, #ffffff, #f9f9f9);
+}
+
+.feature-card {
+  width: 300px;
+  margin: 20px;
+  padding: 30px;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+}
+
+.feature-icon.shopping {
+  background-image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');
+}
+
+.feature-icon.dining {
+  background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');
+}
+
+.feature-icon.entertainment {
+  background-image: url('https://images.unsplash.com/photo-1486572788966-cfd3df1f5b42?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');
+}
+
+.feature-card h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.feature-card p {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* Booking section */
+.booking-section {
+  padding: 70px 20px;
+  background: linear-gradient(108deg, rgba(238,113,113,1) 1%, rgba(246,215,148,1) 58%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.booking-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://images.unsplash.com/photo-1580618605222-5a3ab72e5dbb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.08;
+  z-index: 0;
+}
+
+.wow-heading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 50px;
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+}
+
+.wow-heading::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 10%;
+  width: 80%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 3px;
+}
+
+.booking-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  position: relative;
+  z-index: 1;
+}
+
+.booking-card {
+  width: 280px;
+  padding: 30px 20px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.booking-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+}
+
+.booking-card.restaurant::before { background: #ff5e85; }
+.booking-card.movie::before { background: #4ea5d9; }
+.booking-card.game::before { background: #44cfcb; }
+.booking-card.event::before { background: #ff8a5c; }
+
+.booking-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+}
+
+.booking-icon {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.booking-card.restaurant .booking-icon { color: #ff5e85; }
+.booking-card.movie .booking-icon { color: #4ea5d9; }
+.booking-card.game .booking-icon { color: #44cfcb; }
+.booking-card.event .booking-icon { color: #ff8a5c; }
+
+.booking-card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.booking-card p {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.book-now-btn {
+  background: transparent;
+  border: 2px solid;
+  color: #333;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.booking-card.restaurant .book-now-btn { border-color: #ff5e85; color: #ff5e85; }
+.booking-card.movie .book-now-btn { border-color: #4ea5d9; color: #4ea5d9; }
+.booking-card.game .book-now-btn { border-color: #44cfcb; color: #44cfcb; }
+.booking-card.event .book-now-btn { border-color: #ff8a5c; color: #ff8a5c; }
+
+.booking-card.restaurant .book-now-btn:hover { background: #ff5e85; color: white; }
+.booking-card.movie .book-now-btn:hover { background: #4ea5d9; color: white; }
+.booking-card.game .book-now-btn:hover { background: #44cfcb; color: white; }
+.booking-card.event .book-now-btn:hover { background: #ff8a5c; color: white; }
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .hero-banner {
+    height: 400px;
+  }
+  
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+  
+  .hero-content p {
+    font-size: 1.2rem;
+  }
+  
+  .navigation-row {
+    flex-wrap: wrap;
+    padding: 10px 0;
+  }
+  
+  .section-link {
+    margin: 5px 10px;
+  }
+  
+  .section-link a {
+    font-size: 1rem;
+    padding: 8px 16px;
+  }
+  
+  .feature-card {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .booking-card {
+    width: 100%;
+    max-width: 280px;
+  }
+}

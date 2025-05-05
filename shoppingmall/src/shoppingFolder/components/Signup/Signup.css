@@ -1,0 +1,192 @@
+.Signup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+  font-family: 'SF Pro Display', 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-image: url('https://images.pexels.com/photos/30665214/pexels-photo-30665214/free-photo-of-modern-architectural-escalators-in-berlin-mall.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.Signup::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to right,
+    rgba(255, 122, 69, 0.7),
+    rgba(255, 84, 112, 0.7),
+    rgba(239, 97, 159, 0.7),
+    rgba(214, 75, 177, 0.7),
+    rgba(120, 78, 240, 0.7)
+  );
+  z-index: 1;
+}
+
+.wrapper {
+  position: relative;
+  z-index: 2;
+  width: 420px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h1 {
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #1d1d1f;
+  font-weight: 600;
+  background: linear-gradient(90deg, #ff3e6f, #ffb347, #ffcc33, #00bfff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: colorflow 8s linear infinite;
+}
+
+@keyframes colorflow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-box {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.input-box:hover {
+  transform: translateY(-2px);
+}
+
+.input-box input {
+  width: 100%;
+  height: 50px;
+  padding: 0 15px 0 45px;
+  font-size: 16px;
+  border: 1px solid rgba(210, 210, 215, 0.5);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.input-box input:focus {
+  outline: none;
+  border-color: #ff3e6f;
+  box-shadow: 0 0 0 3px rgba(255, 62, 111, 0.2);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.input-box i {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: #86868b;
+  font-size: 20px;
+}
+
+.signupButton {
+  width: 100%;
+  height: 50px;
+  background: linear-gradient(90deg, #ff3e6f, #ff7f50);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(255, 62, 111, 0.3);
+}
+
+.signupButton:hover {
+  background: linear-gradient(90deg, #ff3e6f, #ff7f50);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 62, 111, 0.4);
+}
+
+.signupButton:active {
+  transform: translateY(1px);
+}
+
+.registration, .role-selection {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.registration p, .role-selection p {
+  color: #555;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.role-links {
+  display: flex;
+  gap: 15px;
+}
+
+.role-links .signupButton {
+  flex: 1;
+  background: linear-gradient(90deg, #00bfff, #33ccff);
+  box-shadow: 0 4px 15px rgba(0, 191, 255, 0.3);
+}
+
+.role-links .signupButton:hover {
+  background: linear-gradient(90deg, #00bfff, #33ccff);
+  box-shadow: 0 6px 20px rgba(0, 191, 255, 0.4);
+}
+
+.role-links .signupButton:first-child {
+  background: linear-gradient(90deg, #ffb347, #ffcc33);
+  box-shadow: 0 4px 15px rgba(255, 179, 71, 0.3);
+}
+
+.role-links .signupButton:first-child:hover {
+  background: linear-gradient(90deg, #ffb347, #ffcc33);
+  box-shadow: 0 6px 20px rgba(255, 179, 71, 0.4);
+}
+
+/* Add responsiveness */
+@media (max-width: 480px) {
+  .wrapper {
+    width: 90%;
+    padding: 30px 20px;
+  }
+  
+  .role-links {
+    flex-direction: column;
+  }
+}
