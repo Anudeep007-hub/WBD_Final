@@ -41,8 +41,12 @@ const port = 5000;
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:3000',
-  credentials: true,
+  origin: [
+    'http://localhost:3000',
+    'https://wbd-final-3fx0g8nme-anudeep007-hubs-projects.vercel.app'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
 }));
 app.use(bodyParser.json());
 
