@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "https://wbd-final.onrender.com"
+            "url": "http://localhost:5000"
         }
     ],
     "paths": {
@@ -247,7 +247,7 @@
                 }
             }
         },
-        "/deals": {
+        "/api/deals": {
             "get": {
                 "summary": "Get all deals",
                 "tags": [
@@ -255,10 +255,22 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of deals"
+                        "description": "List of deals",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Deal"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-            },
+            }
+        },
+        "/api/add-deal": {
             "post": {
                 "summary": "Create a new deal",
                 "tags": [
@@ -269,40 +281,52 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Deal"
+                                "type": "object",
+                                "required": [
+                                    "shop",
+                                    "description",
+                                    "expiration"
+                                ],
+                                "properties": {
+                                    "shop": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "expiration": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    }
+                                }
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "Deal created"
+                        "description": "Deal created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Deal added successfully!"
+                                        },
+                                        "deal": {
+                                            "$ref": "#/components/schemas/Deal"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
         },
-        "/deals/{id}": {
-            "get": {
-                "summary": "Get a deal by ID",
-                "tags": [
-                    "Deals"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Deal details"
-                    }
-                }
-            },
+        "/api/deals/{id}": {
             "put": {
                 "summary": "Update a deal by ID",
                 "tags": [
@@ -323,40 +347,41 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Deal"
+                                "type": "object",
+                                "properties": {
+                                    "store": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "expiration": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "image": {
+                                        "type": "string"
+                                    }
+                                }
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Deal updated"
-                    }
-                }
-            },
-            "delete": {
-                "summary": "Delete a deal by ID",
-                "tags": [
-                    "Deals"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
+                        "description": "Deal updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Deal"
+                                }
+                            }
                         }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Deal deleted"
                     }
                 }
             }
         },
-        "/events": {
+        "/api/events": {
             "get": {
                 "summary": "Get all events",
                 "tags": [
@@ -364,108 +389,66 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of events"
+                        "description": "List of events",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Event"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-            },
+            }
+        },
+        "/api/feedback": {
             "post": {
-                "summary": "Create an event",
+                "summary": "Submit feedback",
                 "tags": [
-                    "Events"
+                    "Feedback"
                 ],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Event"
+                                "type": "object",
+                                "required": [
+                                    "username",
+                                    "rating",
+                                    "message"
+                                ],
+                                "properties": {
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "rating": {
+                                        "type": "string",
+                                        "enum": [
+                                            "1",
+                                            "2",
+                                            "3",
+                                            "4",
+                                            "5"
+                                        ]
+                                    },
+                                    "message": {
+                                        "type": "string"
+                                    }
+                                }
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "Event created"
-                    }
-                }
-            }
-        },
-        "/events/{id}": {
-            "get": {
-                "summary": "Get event by ID",
-                "tags": [
-                    "Events"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Event details"
+                        "description": "Feedback submitted successfully"
                     }
                 }
             },
-            "put": {
-                "summary": "Update event",
-                "tags": [
-                    "Events"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Event"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Event updated"
-                    }
-                }
-            },
-            "delete": {
-                "summary": "Delete event",
-                "tags": [
-                    "Events"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Event deleted"
-                    }
-                }
-            }
-        },
-        "/feedbacks": {
             "get": {
                 "summary": "Get all feedbacks",
                 "tags": [
@@ -473,90 +456,213 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of feedbacks"
+                        "description": "List of feedbacks",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Feedback"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-            },
+            }
+        },
+        "/api/signup": {
             "post": {
-                "summary": "Create feedback",
+                "summary": "Register a new user",
                 "tags": [
-                    "Feedback"
+                    "Auth"
                 ],
                 "requestBody": {
                     "required": true,
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/Feedback"
+                                "type": "object",
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "role": {
+                                        "type": "string"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "Feedback submitted"
+                        "description": "User created successfully"
                     }
                 }
             }
         },
-        "/feedbacks/{id}": {
-            "delete": {
-                "summary": "Delete feedback",
+        "/api/login": {
+            "post": {
+                "summary": "Login user",
                 "tags": [
-                    "Feedback"
+                    "Auth"
                 ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
                         }
                     }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Feedback deleted"
-                    }
-                }
-            }
-        },
-        "/managers": {
-            "get": {
-                "summary": "Get all managers",
-                "tags": [
-                    "Manager"
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "List of managers"
+                        "description": "Login successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-            },
+            }
+        },
+        "/api/manager-login": {
             "post": {
-                "summary": "Create a manager",
+                "summary": "Login manager",
                 "tags": [
-                    "Manager"
+                    "Auth"
                 ],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Manager"
+                                "type": "object",
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
                             }
                         }
                     }
                 },
                 "responses": {
-                    "201": {
-                        "description": "Manager created"
+                    "200": {
+                        "description": "Login successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
         },
-        "/shops": {
+        "/api/shopowner-login": {
+            "post": {
+                "summary": "Login shop owner",
+                "tags": [
+                    "Auth"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/shops": {
             "get": {
                 "summary": "Get all shops",
                 "tags": [
@@ -564,33 +670,22 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of shops"
-                    }
-                }
-            },
-            "post": {
-                "summary": "Create shop",
-                "tags": [
-                    "Shops"
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Shop"
+                        "description": "List of shops",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Shop"
+                                    }
+                                }
                             }
                         }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Shop created"
                     }
                 }
             }
         },
-        "/shops/{id}": {
+        "/api/shops/{id}": {
             "put": {
                 "summary": "Update shop",
                 "tags": [
@@ -611,22 +706,315 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Shop"
+                                "type": "object",
+                                "properties": {
+                                    "location": {
+                                        "type": "string"
+                                    },
+                                    "contact": {
+                                        "type": "string"
+                                    }
+                                }
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Shop updated"
+                        "description": "Shop updated successfully"
+                    }
+                }
+            }
+        },
+        "/api/shopowners": {
+            "get": {
+                "summary": "Get all shop owners",
+                "tags": [
+                    "Shop Owner"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of shop owners",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ShopOwner"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/shopowner/profile": {
+            "get": {
+                "summary": "Get shop owner profile",
+                "tags": [
+                    "Shop Owner"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Shop owner profile",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "contact": {
+                                            "type": "string"
+                                        },
+                                        "shop": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             },
-            "delete": {
-                "summary": "Delete shop",
+            "put": {
+                "summary": "Update shop owner profile",
                 "tags": [
-                    "Shops"
+                    "Shop Owner"
                 ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "contact": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Profile updated successfully"
+                    }
+                }
+            }
+        },
+        "/api/admin/dashboard": {
+            "get": {
+                "summary": "Get admin dashboard",
+                "tags": [
+                    "Admin"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Admin dashboard data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Welcome to the Admin Dashboard"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/managers": {
+            "post": {
+                "summary": "Create a new manager",
+                "tags": [
+                    "Admin"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "section"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "section": {
+                                        "type": "string",
+                                        "enum": [
+                                            "weather",
+                                            "sports",
+                                            "theatre",
+                                            "restaurant"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Manager created successfully"
+                    }
+                }
+            }
+        },
+        "/stats": {
+            "get": {
+                "summary": "Get system statistics",
+                "tags": [
+                    "Admin"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "System statistics",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "usersCount": {
+                                            "type": "integer"
+                                        },
+                                        "shopOwnersCount": {
+                                            "type": "integer"
+                                        },
+                                        "shopsCount": {
+                                            "type": "integer"
+                                        },
+                                        "SportbookingTrue": {
+                                            "type": "integer"
+                                        },
+                                        "SportbookingFalse": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sport/owner/get": {
+            "get": {
+                "tags": ["Sports"],
+                "summary": "Get all sports",
+                "responses": {
+                    "200": {
+                        "description": "List of all sports",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Sport"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/sport/owner/create": {
+            "post": {
+                "tags": ["Sports"],
+                "summary": "Create a new sport",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["label", "body", "cost", "address", "contact_mail", "slot_timings", "date"],
+                                "properties": {
+                                    "label": {
+                                        "type": "string",
+                                        "description": "Name of the sport"
+                                    },
+                                    "body": {
+                                        "type": "string",
+                                        "description": "Description of the sport"
+                                    },
+                                    "cost": {
+                                        "type": "number",
+                                        "description": "Cost of the sport"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "description": "Location of the sport"
+                                    },
+                                    "contact_mail": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "description": "Contact email"
+                                    },
+                                    "slot_timings": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "description": "Available time slots"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "description": "Date for the slots"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Sport created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/sport/owner/update/{id}": {
+            "put": {
+                "tags": ["Sports"],
+                "summary": "Update a sport",
                 "parameters": [
                     {
                         "name": "id",
@@ -636,64 +1024,6 @@
                             "type": "string"
                         }
                     }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Shop deleted"
-                    }
-                }
-            }
-        },
-        "/shopOwners": {
-            "get": {
-                "summary": "Get all shop owners",
-                "tags": [
-                    "Shop Owner"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "List of shop owners"
-                    }
-                }
-            },
-            "post": {
-                "summary": "Create shop owner",
-                "tags": [
-                    "Shop Owner"
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ShopOwner"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Shop owner created"
-                    }
-                }
-            }
-        },
-        "/sports": {
-            "get": {
-                "summary": "Get all sports",
-                "tags": [
-                    "Sports"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "List of sports"
-                    }
-                }
-            },
-            "post": {
-                "summary": "Create sport",
-                "tags": [
-                    "Sports"
                 ],
                 "requestBody": {
                     "required": true,
@@ -706,21 +1036,101 @@
                     }
                 },
                 "responses": {
-                    "201": {
-                        "description": "Sport created"
+                    "200": {
+                        "description": "Sport updated successfully"
+                    },
+                    "404": {
+                        "description": "Sport not found"
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
                 }
             }
         },
-        "/user/get": {
-            "get": {
-                "summary": "Get all sports data",
-                "tags": [
-                    "Sport Owner"
+        "/sport/owner/delete/{id}": {
+            "delete": {
+                "tags": ["Sports"],
+                "summary": "Delete a sport",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
                 ],
                 "responses": {
                     "200": {
-                        "description": "A list of sports",
+                        "description": "Sport deleted successfully"
+                    },
+                    "404": {
+                        "description": "Sport not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/sport/booking/{id}": {
+            "put": {
+                "tags": ["Sports"],
+                "summary": "Book a sport slot",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["is_booked", "email"],
+                                "properties": {
+                                    "is_booked": {
+                                        "type": "boolean",
+                                        "description": "Booking status"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "description": "User's email"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Slot booked successfully"
+                    },
+                    "404": {
+                        "description": "Slot not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/sport/user/get": {
+            "get": {
+                "tags": ["Sports"],
+                "summary": "Get all sports for users",
+                "responses": {
+                    "200": {
+                        "description": "List of all sports",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -731,22 +1141,22 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
                 }
             }
         },
-        "/user/booking/{id}": {
+        "/sport/user/booking/{id}": {
             "get": {
-                "summary": "Get bookings for a specific sport",
-                "tags": [
-                    "Sport Owner"
-                ],
+                "tags": ["Sports"],
+                "summary": "Get bookings for a sport",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
                         "required": true,
-                        "description": "Sport ID",
                         "schema": {
                             "type": "string"
                         }
@@ -768,87 +1178,17 @@
                     },
                     "404": {
                         "description": "No bookings found"
-                    }
-                }
-            }
-        },
-        "/owner/create": {
-            "post": {
-                "summary": "Create a new sport and associated slots",
-                "tags": [
-                    "Sport Owner"
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CreateSportRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Sport and slots created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/CreateSportResponse"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid input"
-                    }
-                }
-            }
-        },
-        "/get_user_details": {
-            "post": {
-                "summary": "Get user details by email",
-                "tags": [
-                    "Sport Owner"
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "email": {
-                                        "type": "string",
-                                        "example": "user@example.com"
-                                    }
-                                },
-                                "required": [
-                                    "email"
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "User details retrieved successfully"
-                    },
-                    "404": {
-                        "description": "User not found"
                     },
                     "500": {
-                        "description": "Internal Server Error"
+                        "description": "Server error"
                     }
                 }
             }
         },
-        "/booking-details/{userId}": {
+        "/user/booking-details/{userId}": {
             "get": {
-                "summary": "Get all booking details for a user",
-                "tags": [
-                    "Sport Owner"
-                ],
+                "tags": ["User"],
+                "summary": "Get user booking details",
                 "parameters": [
                     {
                         "name": "userId",
@@ -856,156 +1196,115 @@
                         "required": true,
                         "schema": {
                             "type": "string"
-                        },
-                        "description": "User ID"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Returns user details, bookings, and wallet"
+                        "description": "User booking details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "userDetails": {
+                                            "$ref": "#/components/schemas/User"
+                                        },
+                                        "bookings": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Booking"
+                                            }
+                                        },
+                                        "userWallet": {
+                                            "$ref": "#/components/schemas/UserWallet"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "404": {
                         "description": "User not found"
                     },
                     "500": {
-                        "description": "Server Error"
+                        "description": "Server error"
                     }
                 }
             }
         },
         "/get_user_bookings": {
             "post": {
-                "summary": "Get sport bookings for a user by email",
-                "tags": [
-                    "Sport Owner"
-                ],
+                "tags": ["User"],
+                "summary": "Get user bookings by email",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "type": "object",
+                                "required": ["email"],
                                 "properties": {
                                     "email": {
                                         "type": "string",
-                                        "example": "user@example.com"
+                                        "format": "email"
                                     }
-                                },
-                                "required": [
-                                    "email"
-                                ]
+                                }
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Returns list of booked sports"
+                        "description": "User bookings",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "sport": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Sport"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "404": {
                         "description": "No bookings found"
                     },
                     "500": {
-                        "description": "Server Error"
+                        "description": "Server error"
                     }
                 }
             }
         },
-        "/users": {
-            "get": {
-                "summary": "Get all users",
-                "tags": [
-                    "Users"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "List of users"
-                    }
-                }
-            },
+        "/theatres": {
             "post": {
-                "summary": "Register user",
-                "tags": [
-                    "Users"
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/User"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "User created"
-                    }
-                }
-            }
-        },
-        "/api/admin/dashboard": {
-            "get": {
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Get admin dashboard message",
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Welcome to the Admin Dashboard"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/managers": {
-            "post": {
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Create a new manager and send credentials via email",
+                "tags": ["Theatre"],
+                "summary": "Create a new theatre",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "name",
-                                    "email",
-                                    "section"
-                                ],
+                                "required": ["theatrename", "location", "theatreImglink"],
                                 "properties": {
-                                    "name": {
+                                    "theatrename": {
                                         "type": "string",
-                                        "example": "John Doe"
+                                        "description": "Name of the theatre"
                                     },
-                                    "email": {
+                                    "location": {
                                         "type": "string",
-                                        "example": "johndoe@example.com"
+                                        "description": "Location of the theatre"
                                     },
-                                    "section": {
+                                    "theatreImglink": {
                                         "type": "string",
-                                        "enum": [
-                                            "weather",
-                                            "sports",
-                                            "theatre",
-                                            "restaurant"
-                                        ],
-                                        "example": "sports"
+                                        "description": "Image URL of the theatre"
                                     }
                                 }
                             }
@@ -1014,47 +1313,939 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Manager created successfully and email sent",
+                        "description": "Theatre created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Theatre"],
+                "summary": "Get all theatres",
+                "responses": {
+                    "200": {
+                        "description": "List of theatres",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Manager created successfully and email sent!"
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Theatre"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/theatres/{id}": {
+            "get": {
+                "tags": ["Theatre"],
+                "summary": "Get a theatre by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Theatre details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Theatre"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Theatre not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Theatre"],
+                "summary": "Update a theatre",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Theatre"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Theatre updated successfully"
+                    },
+                    "404": {
+                        "description": "Theatre not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Theatre"],
+                "summary": "Delete a theatre",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Theatre and related data deleted successfully"
+                    },
+                    "404": {
+                        "description": "Theatre not found"
+                    }
+                }
+            }
+        },
+        "/theatres/name/{name}": {
+            "get": {
+                "tags": ["Theatre"],
+                "summary": "Get a theatre by name",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Theatre details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Theatre"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Theatre not found"
+                    }
+                }
+            }
+        },
+        "/screens": {
+            "post": {
+                "tags": ["Screen"],
+                "summary": "Create a new screen",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["classInfo", "screenNo", "theatreId", "dim", "validSeats"],
+                                "properties": {
+                                    "classInfo": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "required": ["classNo", "className"],
+                                            "properties": {
+                                                "classNo": {
+                                                    "type": "number"
+                                                },
+                                                "className": {
+                                                    "type": "string"
+                                                }
+                                            }
                                         }
+                                    },
+                                    "screenNo": {
+                                        "type": "number"
+                                    },
+                                    "theatreId": {
+                                        "type": "string"
+                                    },
+                                    "dim": {
+                                        "type": "object",
+                                        "required": ["NumRows", "SeatsPerRow"],
+                                        "properties": {
+                                            "NumRows": {
+                                                "type": "number"
+                                            },
+                                            "SeatsPerRow": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    },
+                                    "validSeats": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Screen created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Screen"],
+                "summary": "Get all screens",
+                "responses": {
+                    "200": {
+                        "description": "List of screens",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Screen"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/screensQuery": {
+            "get": {
+                "tags": ["Screen"],
+                "summary": "Get screens by query parameters",
+                "parameters": [
+                    {
+                        "name": "theatreId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of screens",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Screen"
                                     }
                                 }
                             }
                         }
                     },
-                    "400": {
-                        "description": "Bad Request",
+                    "404": {
+                        "description": "No screens found"
+                    }
+                }
+            }
+        },
+        "/screensbyNo": {
+            "get": {
+                "tags": ["Screen"],
+                "summary": "Get screen by number",
+                "parameters": [
+                    {
+                        "name": "screenNum",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "theatreId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Screen details",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Validation error or email sending failed"
+                                    "$ref": "#/components/schemas/Screen"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Screen not found"
+                    }
+                }
+            }
+        },
+        "/screens/{id}": {
+            "get": {
+                "tags": ["Screen"],
+                "summary": "Get a screen by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Screen details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Screen"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Screen not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Screen"],
+                "summary": "Update a screen",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Screen"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Screen updated successfully"
+                    },
+                    "404": {
+                        "description": "Screen not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Screen"],
+                "summary": "Delete a screen",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Screen and related data deleted successfully"
+                    },
+                    "404": {
+                        "description": "Screen not found"
+                    }
+                }
+            }
+        },
+        "/movies": {
+            "post": {
+                "tags": ["Movie"],
+                "summary": "Create a new movie",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["title", "imgSrc", "description", "genre", "language", "cast", "theatreId"],
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "imgSrc": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "genre": {
+                                        "type": "string"
+                                    },
+                                    "language": {
+                                        "type": "string"
+                                    },
+                                    "cast": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "required": ["name", "img"],
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "img": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "theatreId": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Movie created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Movie"],
+                "summary": "Get all movies",
+                "responses": {
+                    "200": {
+                        "description": "List of movies",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Movie"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/moviesQuery": {
+            "get": {
+                "tags": ["Movie"],
+                "summary": "Get movies by query parameters",
+                "parameters": [
+                    {
+                        "name": "theatreId",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "screenId",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of movies",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Movie"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/movies/{id}": {
+            "get": {
+                "tags": ["Movie"],
+                "summary": "Get a movie by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Movie details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Movie"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Movie not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Movie"],
+                "summary": "Update a movie",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Movie"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Movie updated successfully"
+                    },
+                    "404": {
+                        "description": "Movie not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Movie"],
+                "summary": "Delete a movie",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Movie and related slots deleted successfully"
+                    },
+                    "404": {
+                        "description": "Movie not found"
+                    }
+                }
+            }
+        },
+        "/movies/name/{name}": {
+            "get": {
+                "tags": ["Movie"],
+                "summary": "Get a movie by name",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Movie details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Movie"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Movie not found"
+                    }
+                }
+            }
+        },
+        "/moviesByTS": {
+            "get": {
+                "tags": ["Movie"],
+                "summary": "Get movies by theatre and screen",
+                "parameters": [
+                    {
+                        "name": "theatreId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "screenId",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of movies",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Movie"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/moviesByTheatre": {
+            "get": {
+                "tags": ["Movie"],
+                "summary": "Get movies by theatre",
+                "parameters": [
+                    {
+                        "name": "theatreId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of movies",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Movie"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No movies found for this theatre"
+                    }
+                }
+            }
+        },
+        "/slots": {
+            "post": {
+                "tags": ["Slot"],
+                "summary": "Create a new slot",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["movieId", "theatreId", "time", "date", "screenId", "classPrices"],
+                                "properties": {
+                                    "movieId": {
+                                        "type": "string"
+                                    },
+                                    "theatreId": {
+                                        "type": "string"
+                                    },
+                                    "time": {
+                                        "type": "string",
+                                        "pattern": "^(0?[1-9]|1[0-2]):[0-5][0-9] ?(AM|PM)$"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "screenId": {
+                                        "type": "string"
+                                    },
+                                    "selectedSeats": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "classPrices": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "required": ["classNo", "className", "price"],
+                                            "properties": {
+                                                "classNo": {
+                                                    "type": "number"
+                                                },
+                                                "className": {
+                                                    "type": "string"
+                                                },
+                                                "price": {
+                                                    "type": "number"
+                                                }
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Slot created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Slot"],
+                "summary": "Get all slots",
+                "responses": {
+                    "200": {
+                        "description": "List of slots",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Slot"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/slotsQuery": {
+            "get": {
+                "tags": ["Slot"],
+                "summary": "Get slots by query parameters",
+                "parameters": [
+                    {
+                        "name": "movieId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "theatreId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "screenId",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "time",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of slots",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Slot"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/slots/{id}": {
+            "get": {
+                "tags": ["Slot"],
+                "summary": "Get a slot by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Slot details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Slot"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Slot not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Slot"],
+                "summary": "Update a slot",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Slot"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Slot updated successfully"
+                    },
+                    "404": {
+                        "description": "Slot not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Slot"],
+                "summary": "Delete a slot",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Slot deleted successfully"
+                    },
+                    "404": {
+                        "description": "Slot not found"
                     }
                 }
             }
         },
         "/book": {
             "post": {
-                "tags": [
-                    "Theatre"
-                ],
-                "summary": "Book seats for a movie slot",
-                "description": "Books seats for a movie slot.",
+                "tags": ["Booking"],
+                "summary": "Create a new booking",
                 "security": [
                     {
                         "bearerAuth": []
@@ -1089,8 +2280,7 @@
                                         "type": "string"
                                     },
                                     "timeSlot": {
-                                        "type": "string",
-                                        "example": "18:00"
+                                        "type": "string"
                                     },
                                     "date": {
                                         "type": "string",
@@ -1124,163 +2314,21 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Booking successful",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Booking successful"
-                                        },
-                                        "booking": {
-                                            "$ref": "#/components/schemas/Booking"
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        "description": "Booking successful"
                     },
                     "400": {
-                        "description": "Seats already booked or invalid input"
+                        "description": "Invalid input or seats already booked"
                     },
                     "404": {
                         "description": "Slot not found"
-                    },
-                    "500": {
-                        "description": "Booking failed"
                     }
                 }
             }
         },
-        "/register": {
-            "post": {
-                "tags": [
-                    "Auth"
-                ],
-                "summary": "Register a new user",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "required": [
-                                    "name",
-                                    "email",
-                                    "password"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "John Doe"
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "example": "john@example.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "example": "password123"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "User registered successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "user": {
-                                            "$ref": "#/components/schemas/User"
-                                        },
-                                        "token": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Validation error or user already exists"
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                }
-            }
-        },
-        "/login": {
-            "post": {
-                "tags": [
-                    "Auth"
-                ],
-                "summary": "Log in as a user",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "required": [
-                                    "email",
-                                    "password"
-                                ],
-                                "properties": {
-                                    "email": {
-                                        "type": "string",
-                                        "example": "john@example.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "example": "password123"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Login successful",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "user": {
-                                            "$ref": "#/components/schemas/User"
-                                        },
-                                        "token": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid credentials"
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                }
-            }
-        },
-        "/verify-token": {
-            "post": {
-                "tags": [
-                    "Auth"
-                ],
-                "summary": "Verify JWT token",
+        "/bookings": {
+            "get": {
+                "tags": ["Booking"],
+                "summary": "Get all bookings",
                 "security": [
                     {
                         "bearerAuth": []
@@ -1288,174 +2336,29 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Token is valid",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "userId": {
-                                            "type": "string"
-                                        },
-                                        "name": {
-                                            "type": "string"
-                                        },
-                                        "role": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid or expired token"
-                    },
-                    "500": {
-                        "description": "Internal server error"
-                    }
-                }
-            }
-        },
-        "/screens": {
-            "post": {
-                "summary": "Create Screen",
-                "description": "Creates a new screen in a theatre.",
-                "tags": [
-                    "Theatre"
-                ],
-                "requestBody": {
-                    "description": "Screen object that needs to be added",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Screen"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Screen created successfully"
-                    },
-                    "400": {
-                        "description": "Error creating screen"
-                    }
-                }
-            },
-            "get": {
-                "summary": "Get All Screens",
-                "description": "Retrieves all screens.",
-                "tags": [
-                    "Theatre"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "List of screens"
-                    },
-                    "500": {
-                        "description": "Server error"
-                    }
-                }
-            }
-        },
-        "/screens/query": {
-            "get": {
-                "summary": "Get Screens by Theatre ID",
-                "description": "Retrieve screens based on theatre ID.",
-                "tags": [
-                    "Theatre"
-                ],
-                "parameters": [
-                    {
-                        "name": "theatreId",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Screens retrieved successfully",
+                        "description": "List of bookings",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Screen"
+                                        "$ref": "#/components/schemas/Booking"
                                     }
                                 }
                             }
                         }
-                    },
-                    "400": {
-                        "description": "Missing or invalid theatreId"
-                    },
-                    "404": {
-                        "description": "No screens found"
-                    },
-                    "500": {
-                        "description": "Server error"
                     }
                 }
             }
         },
-        "/screens/screenNo": {
+        "/bookings/{id}": {
             "get": {
-                "summary": "Get Screen by Screen Number and Theatre ID",
-                "description": "Retrieve a screen using screenNo and theatreId.",
-                "tags": [
-                    "Theatre"
-                ],
-                "parameters": [
+                "tags": ["Booking"],
+                "summary": "Get a booking by ID",
+                "security": [
                     {
-                        "name": "screenNum",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "theatreId",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "bearerAuth": []
                     }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Screen retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Screen"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Screen not found"
-                    },
-                    "500": {
-                        "description": "Server error"
-                    }
-                }
-            }
-        },
-        "/screens/{id}": {
-            "get": {
-                "summary": "Get Screen by ID",
-                "tags": [
-                    "Theatre"
                 ],
                 "parameters": [
                     {
@@ -1469,27 +2372,27 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Screen retrieved successfully",
+                        "description": "Booking details",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Screen"
+                                    "$ref": "#/components/schemas/Booking"
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "Screen not found"
-                    },
-                    "500": {
-                        "description": "Server error"
+                        "description": "Booking not found"
                     }
                 }
             },
             "put": {
-                "summary": "Update Screen by ID",
-                "tags": [
-                    "Theatre"
+                "tags": ["Booking"],
+                "summary": "Update a booking",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "parameters": [
                     {
@@ -1506,27 +2409,27 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Screen"
+                                "$ref": "#/components/schemas/Booking"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Screen updated successfully"
+                        "description": "Booking updated successfully"
                     },
                     "404": {
-                        "description": "Screen not found"
-                    },
-                    "400": {
-                        "description": "Invalid input"
+                        "description": "Booking not found"
                     }
                 }
             },
             "delete": {
-                "summary": "Delete Screen by ID",
-                "tags": [
-                    "Theatre"
+                "tags": ["Booking"],
+                "summary": "Delete a booking",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "parameters": [
                     {
@@ -1540,299 +2443,36 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Screen and related slots deleted"
+                        "description": "Booking deleted successfully"
                     },
                     "404": {
-                        "description": "Screen not found"
-                    },
-                    "500": {
-                        "description": "Error deleting screen"
+                        "description": "Booking not found"
                     }
                 }
             }
         },
-        "/movies": {
-            "post": {
-                "summary": "Create a new movie",
-                "tags": [
-                    "Theatre"
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/MovieInput"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Movie created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Movie"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid input"
-                    },
-                    "404": {
-                        "description": "Theatre not found"
-                    }
-                }
-            },
+        "/bookingdetails": {
             "get": {
-                "summary": "Retrieve all movies",
-                "tags": [
-                    "Theatre"
+                "tags": ["Booking"],
+                "summary": "Get user's bookings",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of movies",
+                        "description": "User's bookings",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Movie"
+                                        "$ref": "#/components/schemas/Booking"
                                     }
                                 }
                             }
                         }
-                    },
-                    "500": {
-                        "description": "Server error"
-                    }
-                }
-            }
-        },
-        "/movies/theatre": {
-            "get": {
-                "summary": "Get movies by theatre ID",
-                "tags": [
-                    "Theatre"
-                ],
-                "parameters": [
-                    {
-                        "name": "theatreId",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Movies retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Movie"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "No movies found for this theatre"
-                    },
-                    "500": {
-                        "description": "Server error"
-                    }
-                }
-            }
-        },
-        "/movies/query": {
-            "get": {
-                "summary": "Get movies by theatre and screen ID",
-                "tags": [
-                    "Theatre"
-                ],
-                "parameters": [
-                    {
-                        "name": "theatreId",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "screenId",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Movies retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Movie"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Server error"
-                    }
-                }
-            }
-        },
-        "/movies/name/{name}": {
-            "get": {
-                "summary": "Get movie by title",
-                "tags": [
-                    "Theatre"
-                ],
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Movie retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Movie"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Movie not found"
-                    },
-                    "500": {
-                        "description": "Server error"
-                    }
-                }
-            }
-        },
-        "/movies/{id}": {
-            "get": {
-                "summary": "Get movie by ID",
-                "tags": [
-                    "Theatre"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Movie retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Movie"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Movie not found"
-                    },
-                    "500": {
-                        "description": "Server error"
-                    }
-                }
-            },
-            "put": {
-                "summary": "Update movie by ID",
-                "tags": [
-                    "Theatre"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/MovieInput"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Movie updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Movie"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid input"
-                    },
-                    "404": {
-                        "description": "Movie not found"
-                    }
-                }
-            },
-            "delete": {
-                "summary": "Delete movie by ID",
-                "tags": [
-                    "Theatre"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Movie and related slots deleted"
-                    },
-                    "404": {
-                        "description": "Movie not found"
-                    },
-                    "500": {
-                        "description": "Internal server error"
                     }
                 }
             }
@@ -1995,80 +2635,6 @@
                     }
                 }
             },
-            "Sport Booking": {
-                "type": "object",
-                "properties": {
-                    "sport_foreignkey": {
-                        "type": "string"
-                    },
-                    "date": {
-                        "type": "string",
-                        "format": "date"
-                    },
-                    "slot": {
-                        "type": "string"
-                    },
-                    "is_booked": {
-                        "type": "boolean"
-                    }
-                }
-            },
-            "CreateSportRequest": {
-                "type": "object",
-                "properties": {
-                    "label": {
-                        "type": "string"
-                    },
-                    "body": {
-                        "type": "string"
-                    },
-                    "cost": {
-                        "type": "number"
-                    },
-                    "address": {
-                        "type": "string"
-                    },
-                    "contact_mail": {
-                        "type": "string"
-                    },
-                    "slot_timings": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "date": {
-                        "type": "string",
-                        "format": "date"
-                    }
-                },
-                "required": [
-                    "label",
-                    "body",
-                    "cost",
-                    "address",
-                    "contact_mail",
-                    "slot_timings",
-                    "date"
-                ]
-            },
-            "CreateSportResponse": {
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
-                    },
-                    "sport": {
-                        "$ref": "#/components/schemas/Sport"
-                    },
-                    "bookings": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Booking"
-                        }
-                    }
-                }
-            },
             "Deal": {
                 "type": "object",
                 "required": [
@@ -2145,47 +2711,6 @@
                         "type": "string"
                     },
                     "createdAt": {
-                        "type": "string",
-                        "format": "date-time"
-                    }
-                }
-            },
-            "Manager": {
-                "type": "object",
-                "required": [
-                    "name",
-                    "password",
-                    "email",
-                    "section"
-                ],
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "minLength": 3,
-                        "maxLength": 50
-                    },
-                    "password": {
-                        "type": "string",
-                        "minLength": 6
-                    },
-                    "email": {
-                        "type": "string",
-                        "format": "email"
-                    },
-                    "section": {
-                        "type": "string",
-                        "enum": [
-                            "weather",
-                            "sports",
-                            "theatre",
-                            "restaurant"
-                        ]
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "updatedAt": {
                         "type": "string",
                         "format": "date-time"
                     }
@@ -2287,190 +2812,50 @@
             },
             "Sport": {
                 "type": "object",
-                "required": [
-                    "label",
-                    "body",
-                    "cost",
-                    "address",
-                    "contact_mail"
-                ],
                 "properties": {
                     "label": {
                         "type": "string",
-                        "maxLength": 30,
-                        "pattern": "^[A-Za-z]+$"
+                        "description": "Name of the sport"
                     },
                     "body": {
                         "type": "string",
-                        "description": "Must contain at least 5 letters and only valid characters"
+                        "description": "Description of the sport"
                     },
                     "cost": {
                         "type": "number",
-                        "minimum": 0,
-                        "maximum": 10000
+                        "description": "Cost of the sport"
                     },
                     "address": {
                         "type": "string",
-                        "maxLength": 200,
-                        "description": "Must contain at least 4 letters and only valid characters"
+                        "description": "Location of the sport"
                     },
                     "contact_mail": {
                         "type": "string",
-                        "format": "email"
+                        "format": "email",
+                        "description": "Contact email"
                     }
                 }
             },
-            "User": {
+            "Booking": {
                 "type": "object",
                 "required": [
-                    "name",
-                    "email",
-                    "password"
+                    "theatrename",
+                    "screenNo",
+                    "date",
+                    "timeSlot",
+                    "selectedSeatCodeMap",
+                    "totalPrice"
                 ],
                 "properties": {
-                    "name": {
+                    "userId": {
                         "type": "string"
                     },
-                    "email": {
-                        "type": "string",
-                        "format": "email"
-                    },
-                    "password": {
-                        "type": "string"
-                    },
-                    "role": {
-                        "type": "string",
-                        "default": "user"
-                    },
-                    "image": {
-                        "type": "string",
-                        "description": "URL to profile image"
-                    }
-                }
-            },
-            "Theatre User": {
-                "type": "object",
-                "properties": {
-                    "_id": {
-                        "type": "string"
-                    },
-                    "name": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    },
-                    "role": {
-                        "type": "string"
-                    },
-                    "image": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "name",
-                    "email",
-                    "password"
-                ]
-            },
-            "Theatre Manager": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string",
-                        "format": "email"
-                    },
-                    "section": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "name",
-                    "email",
-                    "section"
-                ]
-            },
-            "Theatre": {
-                "type": "object",
-                "properties": {
                     "theatrename": {
                         "type": "string"
                     },
-                    "location": {
-                        "type": "string"
-                    },
-                    "theatreImglink": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "theatrename",
-                    "location",
-                    "theatreImglink"
-                ]
-            },
-            "Screen": {
-                "type": "object",
-                "properties": {
-                    "classInfo": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "classNo": {
-                                    "type": "integer"
-                                },
-                                "className": {
-                                    "type": "string"
-                                }
-                            },
-                            "required": [
-                                "classNo",
-                                "className"
-                            ]
-                        }
-                    },
-                    "dim": {
-                        "type": "object",
-                        "properties": {
-                            "NumRows": {
-                                "type": "integer"
-                            },
-                            "SeatsPerRow": {
-                                "type": "integer"
-                            }
-                        },
-                        "required": [
-                            "NumRows",
-                            "SeatsPerRow"
-                        ]
-                    },
-                    "validSeats": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
                     "screenNo": {
-                        "type": "integer"
-                    },
-                    "theatreId": {
                         "type": "string"
-                    }
-                },
-                "required": [
-                    "classInfo",
-                    "dim",
-                    "screenNo",
-                    "theatreId"
-                ]
-            },
-            "Slot": {
-                "type": "object",
-                "properties": {
+                    },
                     "movie": {
                         "type": "string"
                     },
@@ -2480,12 +2865,170 @@
                     "screen": {
                         "type": "string"
                     },
-                    "time": {
+                    "date": {
                         "type": "string"
+                    },
+                    "timeSlot": {
+                        "type": "string"
+                    },
+                    "selectedSeatCodeMap": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "totalPrice": {
+                        "type": "number"
+                    }
+                }
+            },
+            "UserWallet": {
+                "type": "object",
+                "properties": {
+                    "Uid": {
+                        "type": "string",
+                        "description": "User ID"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "description": "User's email"
+                    },
+                    "sports_bookings": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "List of sport booking IDs"
+                    }
+                }
+            },
+            "Theatre": {
+                "type": "object",
+                "required": ["theatrename", "location", "theatreImglink"],
+                "properties": {
+                    "theatrename": {
+                        "type": "string",
+                        "description": "Name of the theatre"
+                    },
+                    "location": {
+                        "type": "string",
+                        "description": "Location of the theatre"
+                    },
+                    "theatreImglink": {
+                        "type": "string",
+                        "description": "Image URL of the theatre"
+                    }
+                }
+            },
+            "Screen": {
+                "type": "object",
+                "required": ["classInfo", "dim", "screenNo", "theatre"],
+                "properties": {
+                    "classInfo": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": ["classNo", "className"],
+                            "properties": {
+                                "classNo": {
+                                    "type": "number"
+                                },
+                                "className": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "dim": {
+                        "type": "object",
+                        "required": ["NumRows", "SeatsPerRow"],
+                        "properties": {
+                            "NumRows": {
+                                "type": "number"
+                            },
+                            "SeatsPerRow": {
+                                "type": "number"
+                            }
+                        }
+                    },
+                    "validSeats": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "screenNo": {
+                        "type": "number"
+                    },
+                    "theatre": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Movie": {
+                "type": "object",
+                "required": ["title", "imgSrc", "description", "genre", "language"],
+                "properties": {
+                    "theatre": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "imgSrc": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "genre": {
+                        "type": "string"
+                    },
+                    "language": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "cast": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": ["name", "img"],
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "img": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "Slot": {
+                "type": "object",
+                "required": ["movie", "theatre", "time", "date", "screen"],
+                "properties": {
+                    "movie": {
+                        "type": "string"
+                    },
+                    "theatre": {
+                        "type": "string"
+                    },
+                    "time": {
+                        "type": "string",
+                        "pattern": "^(0?[1-9]|1[0-2]):[0-5][0-9] ?(AM|PM)$"
                     },
                     "date": {
                         "type": "string",
                         "format": "date"
+                    },
+                    "screen": {
+                        "type": "string"
                     },
                     "selectedSeats": {
                         "type": "array",
@@ -2497,9 +3040,10 @@
                         "type": "array",
                         "items": {
                             "type": "object",
+                            "required": ["classNo", "className", "price"],
                             "properties": {
                                 "classNo": {
-                                    "type": "integer"
+                                    "type": "number"
                                 },
                                 "className": {
                                     "type": "string"
@@ -2507,411 +3051,17 @@
                                 "price": {
                                     "type": "number"
                                 }
-                            },
-                            "required": [
-                                "classNo",
-                                "className",
-                                "price"
-                            ]
+                            }
                         }
-                    }
-                },
-                "required": [
-                    "movie",
-                    "theatre",
-                    "screen",
-                    "time",
-                    "date"
-                ]
-            },
-            "Theatre Booking": {
-                "type": "object",
-                "properties": {
-                    "movieId": {
-                        "type": "string"
-                    },
-                    "theatreId": {
-                        "type": "string"
-                    },
-                    "screenId": {
-                        "type": "string"
-                    },
-                    "timeSlot": {
-                        "type": "string"
-                    },
-                    "date": {
-                        "type": "string",
-                        "format": "date"
-                    },
-                    "selectedSeats": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "selectedSeatCodeMap": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "string"
-                        }
-                    },
-                    "totalPrice": {
-                        "type": "number"
-                    },
-                    "screenNo": {
-                        "type": "integer"
-                    },
-                    "theatrename": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "movieId",
-                    "theatreId",
-                    "screenId",
-                    "timeSlot",
-                    "date",
-                    "selectedSeats",
-                    "selectedSeatCodeMap",
-                    "totalPrice",
-                    "screenNo",
-                    "theatrename"
-                ]
-            },
-            "CastMember": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "img": {
-                        "type": "string"
-                    }
-                }
-            },
-            "MovieInput": {
-                "type": "object",
-                "required": [
-                    "title",
-                    "imgSrc",
-                    "description",
-                    "genre",
-                    "language",
-                    "cast",
-                    "theatreId"
-                ],
-                "properties": {
-                    "title": {
-                        "type": "string"
-                    },
-                    "imgSrc": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
-                    "genre": {
-                        "type": "string"
-                    },
-                    "language": {
-                        "type": "string"
-                    },
-                    "cast": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/CastMember"
-                        }
-                    },
-                    "theatreId": {
-                        "type": "string"
-                    }
-                }
-            },
-            "Movie": {
-                "type": "object",
-                "properties": {
-                    "_id": {
-                        "type": "string"
-                    },
-                    "theatre": {
-                        "type": "string"
-                    },
-                    "title": {
-                        "type": "string"
-                    },
-                    "imgSrc": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
-                    "genre": {
-                        "type": "string"
-                    },
-                    "language": {
-                        "type": "string"
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "cast": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/CastMember"
-                        }
-                    }
-                }
-            },
-            "BookingInput": {
-                "type": "object",
-                "properties": {
-                    "userId": {
-                        "type": "string"
-                    },
-                    "theatrename": {
-                        "type": "string"
-                    },
-                    "screenNo": {
-                        "type": "string"
-                    },
-                    "movie": {
-                        "type": "string"
-                    },
-                    "theatre": {
-                        "type": "string"
-                    },
-                    "screen": {
-                        "type": "string"
-                    },
-                    "date": {
-                        "type": "string"
-                    },
-                    "timeSlot": {
-                        "type": "string"
-                    },
-                    "selectedSeatCodeMap": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "string"
-                        }
-                    },
-                    "totalPrice": {
-                        "type": "number"
-                    }
-                },
-                "required": [
-                    "theatrename",
-                    "screenNo",
-                    "date",
-                    "timeSlot",
-                    "selectedSeatCodeMap",
-                    "totalPrice"
-                ]
-            },
-            "Booking": {
-                "type": "object",
-                "properties": {
-                    "_id": {
-                        "type": "string"
-                    },
-                    "userId": {
-                        "type": "string"
-                    },
-                    "theatrename": {
-                        "type": "string"
-                    },
-                    "screenNo": {
-                        "type": "string"
-                    },
-                    "movie": {
-                        "type": "string"
-                    },
-                    "theatre": {
-                        "type": "string"
-                    },
-                    "screen": {
-                        "type": "string"
-                    },
-                    "date": {
-                        "type": "string"
-                    },
-                    "timeSlot": {
-                        "type": "string"
-                    },
-                    "selectedSeatCodeMap": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "string"
-                        }
-                    },
-                    "totalPrice": {
-                        "type": "number"
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "updatedAt": {
-                        "type": "string",
-                        "format": "date-time"
                     }
                 }
             }
         },
-        "/bookings": {
-            "get": {
-                "summary": "Get all bookings",
-                "responses": {
-                    "200": {
-                        "description": "List of all bookings",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Booking"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Server error"
-                    }
-                }
-            }
-        },
-        "/bookings/user": {
-            "get": {
-                "summary": "Get bookings for logged-in user",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "List of bookings for the user",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Booking"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authorization token is required"
-                    },
-                    "400": {
-                        "description": "Invalid token"
-                    },
-                    "500": {
-                        "description": "Server error"
-                    }
-                }
-            }
-        },
-        "/bookings/{id}": {
-            "get": {
-                "summary": "Get a booking by ID",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Booking details",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Booking"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Booking not found"
-                    },
-                    "500": {
-                        "description": "Server error"
-                    }
-                }
-            },
-            "put": {
-                "summary": "Update a booking by ID",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/BookingInput"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Booking updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Booking"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request body"
-                    },
-                    "404": {
-                        "description": "Booking not found"
-                    }
-                }
-            },
-            "delete": {
-                "summary": "Delete a booking by ID",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Booking deleted successfully"
-                    },
-                    "404": {
-                        "description": "Booking not found"
-                    },
-                    "500": {
-                        "description": "Server error"
-                    }
-                }
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
             }
         }
     }
