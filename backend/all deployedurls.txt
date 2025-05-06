@@ -1,0 +1,4 @@
+shop front = https://wbd-final-git-main-anudeep007-hubs-projects.vercel.app/login 
+shop back = https://wbd-final.onrender.com/
+theatre-fnt = https://theatre-d217.onrender.com
+theatre back = https://moviebooking-1.onrender.com/
